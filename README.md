@@ -44,7 +44,7 @@ Not yet on crates.io — depend on the repository:
 
 ```toml
 [dependencies]
-msg_post_process = { git = "https://github.com/MolecularSadism/msg_post_process", branch = "main" }
+msg_post_process = { git = "https://github.com/MolecularSadism/msg_post_process", tag = "v0.1.0" }
 ```
 
 ## Compatibility
