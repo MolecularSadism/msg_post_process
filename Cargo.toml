@@ -8,6 +8,7 @@ license = "MIT OR Apache-2.0"
 repository = "https://github.com/MolecularSadism/msg_post_process"
 readme = "README.md"
 keywords = ["bevy", "render", "post-process", "gamedev"]
+categories = ["game-development", "rendering", "rendering::engine"]
 
 [dependencies]
 bevy = { version = "0.18", default-features = false, features = [
