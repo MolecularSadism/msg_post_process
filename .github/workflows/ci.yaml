@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  # `publish-checks` stays off until this crate is released to crates.io; flip it
+  # to `true` (with `with:`) alongside the first publish.
+  ci:
+    uses: MolecularSadism/msg_ci_templates/.github/workflows/bevy-0.18-ci.yaml@main

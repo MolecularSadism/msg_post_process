@@ -1,14 +1,11 @@
-# Shared standalone crate: no workspace inheritance, so it can move to its own
-# GitHub repository as-is — the game then redirects its dependency from `path`
-# to `git` in the root [workspace.dependencies].
-
 [package]
 name = "msg_post_process"
 version = "0.1.0"
 edition = "2024"
+authors = ["ffmulks <63452434+ffmulks@users.noreply.github.com>"]
 description = "Central ordering registry for full-screen post-process render-graph passes in Bevy."
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/ffmulks/gravitaria"
+repository = "https://github.com/MolecularSadism/msg_post_process"
 readme = "README.md"
 keywords = ["bevy", "render", "post-process", "gamedev"]
 

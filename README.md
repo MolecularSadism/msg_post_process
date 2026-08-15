@@ -1,5 +1,10 @@
 # msg_post_process
 
+[![CI](https://github.com/MolecularSadism/msg_post_process/workflows/CI/badge.svg)](https://github.com/MolecularSadism/msg_post_process/actions)
+[![License](https://img.shields.io/badge/license-MIT%2FApache--2.0-blue.svg)](https://github.com/MolecularSadism/msg_post_process#license)
+[![Bevy](https://img.shields.io/badge/Bevy-0.18-blue.svg)](https://bevyengine.org/)
+[![Rust](https://img.shields.io/badge/rust-2024%20edition-orange.svg)](https://www.rust-lang.org/)
+
 Thin ergonomics for ordering full-screen post-process passes in
 [Bevy](https://bevyengine.org)'s render graph.
 
@@ -32,6 +37,15 @@ against the live render graph, so the referenced nodes must already exist —
 wire edges from a plugin that runs after both nodes are added, typically in
 `Plugin::finish`. Every method is a no-op when the app has no `RenderApp`
 (e.g. headless tests), so callers don't need to guard for it.
+
+## Installation
+
+Not yet on crates.io — depend on the repository:
+
+```toml
+[dependencies]
+msg_post_process = { git = "https://github.com/MolecularSadism/msg_post_process", branch = "main" }
+```
 
 ## Compatibility
 
