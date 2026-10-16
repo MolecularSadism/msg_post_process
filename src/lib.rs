@@ -19,7 +19,7 @@
 //! use msg_post_process::PostProcessAppExt;
 //!
 //! #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemSet)]
-//! struct MyEffectPass;
+//! struct MyEffectSystems;
 //!
 //! fn my_effect_pass() {}
 //!
@@ -27,10 +27,10 @@
 //! app.add_plugins(MinimalPlugins);
 //! // Place the pass in the post-main-pass band. (No render app under
 //! // MinimalPlugins, so this is a no-op here — it shows the call shape.)
-//! app.add_post_process_pass(Core2d, MyEffectPass, my_effect_pass)
+//! app.add_post_process_pass(Core2d, MyEffectSystems, my_effect_pass)
 //!     .render_between(
 //!         Core2d,
-//!         MyEffectPass,
+//!         MyEffectSystems,
 //!         Core2dSystems::MainPass,
 //!         Core2dSystems::PostProcess,
 //!     );
@@ -153,10 +153,10 @@ mod tests {
     use bevy::ecs::prelude::*;
 
     #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemSet)]
-    struct FirstPass;
+    struct FirstPassSystems;
 
     #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemSet)]
-    struct SecondPass;
+    struct SecondPassSystems;
 
     #[derive(Resource, Default)]
     struct Order(Vec<&'static str>);
@@ -176,18 +176,18 @@ mod tests {
     #[test]
     fn methods_are_noops_without_a_render_app() {
         let mut app = App::new();
-        app.add_post_process_pass(Core2d, FirstPass, first)
-            .render_after(Core2d, FirstPass, Core2dSystems::MainPass)
-            .render_before(Core2d, FirstPass, Core2dSystems::PostProcess)
+        app.add_post_process_pass(Core2d, FirstPassSystems, first)
+            .render_after(Core2d, FirstPassSystems, Core2dSystems::MainPass)
+            .render_before(Core2d, FirstPassSystems, Core2dSystems::PostProcess)
             .render_between(
                 Core2d,
-                FirstPass,
+                FirstPassSystems,
                 Core2dSystems::MainPass,
                 Core2dSystems::PostProcess,
             )
             .render_between(
                 Core3d,
-                FirstPass,
+                FirstPassSystems,
                 Core3dSystems::MainPass,
                 Core3dSystems::PostProcess,
             );
@@ -202,10 +202,15 @@ mod tests {
         app.insert_sub_app(RenderApp, render_app);
 
         // Added in reverse order; only the wired ordering decides the run order.
-        app.add_post_process_pass(Core2d, SecondPass, second)
-            .add_post_process_pass(Core2d, FirstPass, first)
-            .render_between(Core2d, FirstPass, main_pass, Core2dSystems::PostProcess)
-            .render_after(Core2d, SecondPass, FirstPass);
+        app.add_post_process_pass(Core2d, SecondPassSystems, second)
+            .add_post_process_pass(Core2d, FirstPassSystems, first)
+            .render_between(
+                Core2d,
+                FirstPassSystems,
+                main_pass,
+                Core2dSystems::PostProcess,
+            )
+            .render_after(Core2d, SecondPassSystems, FirstPassSystems);
         let render_app = app.sub_app_mut(RenderApp);
         render_app.add_systems(Core2d, main_pass.in_set(Core2dSystems::MainPass));
 

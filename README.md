@@ -21,12 +21,12 @@ use bevy::core_pipeline::{Core2d, Core2dSystems};
 use msg_post_process::PostProcessAppExt;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, SystemSet)]
-struct MyEffectPass;
+struct MyEffectSystems;
 
-app.add_post_process_pass(Core2d, MyEffectPass, my_effect_pass);
+app.add_post_process_pass(Core2d, MyEffectSystems, my_effect_pass);
 app.render_between(
     Core2d,
-    MyEffectPass,
+    MyEffectSystems,
     Core2dSystems::MainPass,
     Core2dSystems::PostProcess,
 );
